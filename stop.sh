@@ -1,0 +1,1 @@
+docker-compose --env-file ./env/dc.env down --remove-orphans

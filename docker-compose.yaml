@@ -9,7 +9,7 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - "443:443"
+      - "${NGINX_PORT}:${NGINX_PORT}"
     env_file:
       - ./env/dc.env
     volumes:
