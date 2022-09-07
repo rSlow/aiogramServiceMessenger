@@ -5,6 +5,7 @@ services:
     build: ./telegram
     env_file:
       - ./env/telegram.env
+      - ./env/dc.env
 
   nginx:
     build: ./nginx
