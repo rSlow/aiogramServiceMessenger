@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  telegram:
+    build: ./telegram
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./env/dc.env
+    volumes:
+      - /root/ssl_certs/conf:/etc/letsencrypt
+      - /root/ssl_certs/www:/var/www/certbot
