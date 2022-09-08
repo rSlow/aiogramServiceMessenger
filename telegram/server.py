@@ -10,10 +10,10 @@ async def aiogram_test(_):
     return web.json_response(OKResponse().as_response)
 
 
-@routes.get("/aiogram/send/{user}/{message}/")
-@routes.get("/aiogram/send/{user}/")
-@routes.post("/aiogram/send/{user}/")
-@routes.post("/aiogram/send/")
+@routes.get("/aiogram/send/{user}/{message}")
+@routes.get("/aiogram/send/{user}")
+@routes.post("/aiogram/send/{user}")
+@routes.post("/aiogram/send")
 async def send_message(request):
     user = request.match_info.get("user", None) or request.query.get("user", None)
     message = request.match_info.get("message", None) or request.query.get("message", None)
