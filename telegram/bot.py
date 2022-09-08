@@ -5,7 +5,7 @@ from aiogram import Bot, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.dispatcher import Dispatcher
 
-from telegram.utils import start_webhook
+from utils import start_webhook
 
 API_TOKEN = os.getenv("API_TOKEN")
 
