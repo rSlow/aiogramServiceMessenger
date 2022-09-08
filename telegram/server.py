@@ -1,14 +1,13 @@
 from aiogram.utils.exceptions import ChatNotFound, BotBlocked
 from aiohttp import web
+from responses import ErrorResponse, OKResponse
 
 routes = web.RouteTableDef()
 
 
 @routes.get("/aiogram/test")
 async def aiogram_test(_):
-    return web.json_response({
-        "status": "ok"
-    })
+    return web.json_response(OKResponse().as_response)
 
 
 @routes.get("/aiogram/send/{user}/{message}/")
@@ -21,20 +20,17 @@ async def send_message(request):
 
     match user, message:
         case None, None:
-            return web.json_response({
-                "status": "error",
-                "error": "user and message expected"
-            })
+            return web.json_response(ErrorResponse(
+                error_message="user and message expected"
+            ).as_response)
         case None, _:
-            return web.json_response({
-                "status": "error",
-                "error": "user expected"
-            })
+            return web.json_response(ErrorResponse(
+                error_message="user expected"
+            ).as_response)
         case _, None:
-            return web.json_response({
-                "status": "error",
-                "error": "message expected"
-            })
+            return web.json_response(ErrorResponse(
+                error_message="message expected"
+            ).as_response)
     try:
         from bot import bot
         message = await bot.send_message(
@@ -45,12 +41,11 @@ async def send_message(request):
         return web.Response(text=f"user id is not valid")
     except BotBlocked:
         return web.Response(text=f"user {user} has been blocked this bot")
-    return web.json_response({
-        "status": "ok",
-        "user": user,
-        "message": message.text
-    })
 
+    return web.json_response(OKResponse(
+        user=user,
+        message=message.text
+    ).as_response)
 
 app = web.Application()
 app.add_routes(routes)
