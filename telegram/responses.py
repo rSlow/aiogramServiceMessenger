@@ -4,31 +4,23 @@ __all__ = (
 )
 
 
-class Response:
+class Response(dict):
     OK = "ok"
     ERROR = "error"
 
-    def __init__(self):
-        self.response_dict = {}
-
-    @property
-    def as_response(self):
-        return self.response_dict
+    def set_status(self, status):
+        self["status"] = status
 
 
 class OKResponse(Response):
     def __init__(self, **kwargs):
         super().__init__()
-        self.response_dict = {
-            "status": self.OK
-        }
-        self.response_dict.update(kwargs)
+        self.set_status(self.OK)
+        self.update(kwargs)
 
 
 class ErrorResponse(Response):
     def __init__(self, error_message):
         super().__init__()
-        self.response_dict = {
-            "status": self.OK,
-            "error": error_message
-        }
+        self.set_status(self.ERROR)
+        self["error"] = error_message
