@@ -10,7 +10,7 @@ from utils import start_webhook
 API_TOKEN = os.getenv("API_TOKEN")
 
 # webhook settings
-WEBHOOK_HOST = f'https://{os.getenv("DOMAIN")}:{os.getenv("NGINX_PORT")}'
+WEBHOOK_HOST = f'https://{os.getenv("DOMAIN")}:{os.getenv("OUTER_PORT")}'
 WEBHOOK_PATH = f'/bot/{API_TOKEN}'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
