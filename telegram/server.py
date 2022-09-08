@@ -1,4 +1,4 @@
-from aiogram.utils.exceptions import ChatNotFound
+from aiogram.utils.exceptions import ChatNotFound, BotBlocked
 from aiohttp import web
 
 routes = web.RouteTableDef()
@@ -18,6 +18,7 @@ async def aiogram_test(_):
 async def send_message(request):
     user = request.match_info.get("user", None) or request.query.get("user", None)
     message = request.match_info.get("message", None) or request.query.get("message", None)
+
     match user, message:
         case None, None:
             return web.json_response({
@@ -42,6 +43,8 @@ async def send_message(request):
         )
     except ChatNotFound:
         return web.Response(text=f"user id is not valid")
+    except BotBlocked:
+        return web.Response(text=f"user {user} has been blocked this bot")
     return web.json_response({
         "status": "ok",
         "user": user,
