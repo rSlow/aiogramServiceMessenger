@@ -38,14 +38,19 @@ async def send_message(request):
             text=message
         )
     except ChatNotFound:
-        return web.Response(text=f"user id is not valid")
+        return web.json_response(ErrorResponse(
+            error_message=f"user id {user} is not valid"
+        ))
     except BotBlocked:
-        return web.Response(text=f"user {user} has been blocked this bot")
+        return web.json_response(ErrorResponse(
+            error_message=f"user {user} has been blocked this bot"
+        ))
 
     return web.json_response(OKResponse(
         user=user,
         message=message.text
     ))
+
 
 app = web.Application()
 app.add_routes(routes)
