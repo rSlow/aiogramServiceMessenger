@@ -2,18 +2,18 @@ from aiogram.utils.exceptions import ChatNotFound, BotBlocked
 from aiohttp import web
 from responses import ErrorResponse, OKResponse
 
-routes = web.RouteTableDef()
+aiogram_routes = web.RouteTableDef()
 
 
-@routes.get("/aiogram/test")
+@aiogram_routes.get("/test")
 async def aiogram_test(_):
     return web.json_response(OKResponse())
 
 
-@routes.get("/aiogram/send/{user}/{message}")
-@routes.get("/aiogram/send/{user}")
-@routes.post("/aiogram/send/{user}")
-@routes.post("/aiogram/send")
+@aiogram_routes.get("/send/{user}/{message}")
+@aiogram_routes.get("/send/{user}")
+@aiogram_routes.post("/send/{user}")
+@aiogram_routes.post("/send")
 async def send_message(request):
     user = request.match_info.get("user", None) or request.query.get("user", None)
     message = request.match_info.get("message", None) or request.query.get("message", None)
@@ -52,5 +52,11 @@ async def send_message(request):
     ))
 
 
+aiogram_app = web.Application()
+aiogram_app.add_routes(aiogram_routes)
+
 app = web.Application()
-app.add_routes(routes)
+app.add_subapp(prefix="/aiogram", subapp=aiogram_app)
+
+if __name__ == '__main__':
+    web.run_app(app)
