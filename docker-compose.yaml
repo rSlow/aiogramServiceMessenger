@@ -6,6 +6,8 @@ services:
     env_file:
       - ./env/telegram.env
       - ./env/dc.env
+    restart:
+      always
 
   nginx:
     build: ./nginx
@@ -16,3 +18,5 @@ services:
     volumes:
       - /root/ssl_certs/conf:/etc/letsencrypt
       - /root/ssl_certs/www:/var/www/certbot
+    restart:
+      always
