@@ -2,7 +2,7 @@ from aiogram.utils.exceptions import ChatNotFound, BotBlocked
 from aiohttp import web
 
 from telegram.responses import ErrorResponse, OKResponse
-from ..aiogram_app import aiogram_routes
+from ..main import aiogram_routes
 
 
 @aiogram_routes.get("/send/{user}/{message}")

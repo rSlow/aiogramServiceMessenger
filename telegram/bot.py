@@ -48,7 +48,7 @@ async def on_shutdown_func(dp):
 
 
 if __name__ == '__main__':
-    from server.app import app
+    from server.aiohttp_app import app
 
     start_webhook(
         dp=dispatcher,

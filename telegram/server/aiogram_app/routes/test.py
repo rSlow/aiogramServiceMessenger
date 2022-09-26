@@ -1,7 +1,7 @@
 from aiohttp import web
 
 from telegram.responses import OKResponse
-from ..aiogram_app import aiogram_routes
+from ..main import aiogram_routes
 
 
 @aiogram_routes.get("/test")
