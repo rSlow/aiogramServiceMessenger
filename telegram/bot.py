@@ -48,7 +48,7 @@ async def on_shutdown_func(dp):
 
 
 if __name__ == '__main__':
-    from server import app
+    from server.app import app
 
     start_webhook(
         dp=dispatcher,
