@@ -1,6 +1,6 @@
 from aiohttp import web
 
-from telegram.server.aiogram_app.aiogram_app import aiogram_app
+from aiogram_app.aiogram_app import aiogram_app
 
 app = web.Application()
 app.add_subapp(prefix="/aiogram", subapp=aiogram_app)
