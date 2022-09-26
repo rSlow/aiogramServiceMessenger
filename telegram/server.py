@@ -1,8 +1,13 @@
 from aiogram.utils.exceptions import ChatNotFound, BotBlocked
 from aiohttp import web
+from responses import ErrorResponse, OKResponse
 
-from telegram.responses import ErrorResponse, OKResponse
-from ..main import aiogram_routes
+aiogram_routes = web.RouteTableDef()
+
+
+@aiogram_routes.get("/test")
+async def aiogram_test(_):
+    return web.json_response(OKResponse())
 
 
 @aiogram_routes.get("/send/{user}/{message}")
@@ -27,7 +32,7 @@ async def send_message(request):
                 error_message="message expected"
             ))
     try:
-        from telegram.bot import bot
+        from bot import bot
         message = await bot.send_message(
             chat_id=user,
             text=message
@@ -45,3 +50,13 @@ async def send_message(request):
         user=user,
         message=message.text
     ))
+
+
+aiogram_app = web.Application()
+aiogram_app.add_routes(aiogram_routes)
+
+app = web.Application()
+app.add_subapp(prefix="/aiogram", subapp=aiogram_app)
+
+if __name__ == '__main__':
+    web.run_app(app)
